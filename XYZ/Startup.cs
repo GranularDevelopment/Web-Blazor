@@ -24,7 +24,7 @@ namespace XYZ
             services.AddRazorPages();
             //services.AddMvc(option => option.EnableEndpointRouting = false);
             services.AddServerSideBlazor();
-            services.AddSingleton<Need4Service>();
+            services.AddSingleton<WebService>();
             services.AddSingleton<Models.DataContext>();
         }
 

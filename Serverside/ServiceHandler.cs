@@ -12,7 +12,7 @@ namespace Serverside
         {
             server = new Server
             {
-                Services = { ItemRepository.BindService(new ItemRepositoryImpl()) },
+                Services = { ProjectServices.BindService(new ProjectServicesImpl()) },
                 Ports = { new ServerPort("127.0.0.1", Port, ServerCredentials.Insecure) }
             };
             server.Start();

@@ -1,0 +1,13 @@
+﻿syntax = "proto3";
+
+package ServiceProtocol;
+
+message Person {
+	int32 id = 1;
+	string first_name = 2;
+	string last_name = 3;
+	string email = 4;
+	string phone_number = 5;
+	string company_name = 6;
+	string company_type = 7;
+}

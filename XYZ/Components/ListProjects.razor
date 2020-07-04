@@ -1,0 +1,23 @@
+﻿@using ServiceProtocol;
+@using XYZ.Data;
+@inject WebService WebService
+
+<h3>Project List</h3>
+
+
+@if (list != null)
+{
+    <div>
+    @foreach (ProjectRequest i in list)
+    {
+        <br />
+        <span>Message: @i.Message </span>
+    }
+    </div>
+}
+
+
+@code {
+    [Parameter]
+    public List<ProjectRequest> list { get; set; }
+}

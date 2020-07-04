@@ -2,12 +2,12 @@
 
 namespace ServiceProtocol.Validation
 {
-    public class ItemValidator : AbstractValidator<Item>
+    public class PersonValidator : AbstractValidator<Person>
     {
-        public ItemValidator()
+        public PersonValidator()
         {
-            RuleFor(i => i.Name).NotEmpty().WithMessage("You must enter a name");
-            RuleFor(i => i.Name).MaximumLength(5).WithMessage("Name cannot be longer than 5 characters");
+            RuleFor(i => i.FirstName).NotEmpty().WithMessage("You must enter a name");
+            RuleFor(i => i.FirstName).MaximumLength(25).WithMessage("Name cannot be longer than 25 characters");
         }
     }
 }

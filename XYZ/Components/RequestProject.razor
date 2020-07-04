@@ -1,10 +1,10 @@
 ﻿@using ServiceProtocol;
 @using XYZ.Data
-@inject Need4Service Need4Service
+@inject WebService WebService
 
 <h1>Create</h1>
 
-<h4>Item</h4>
+@*<h4>Item</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -39,27 +39,27 @@
     <div class="col-md-4">
         <ListItem list="list"></ListItem>
     </div>
-</div>
+</div>*@
 
 
 
 
 
 @code {
-    Item newItem = new Item();
-    ItemList list = new ItemList();
-    private ItemRepository.ItemRepositoryClient itemClient;
+    ProjectRequest newProject = new ProjectRequest();
+    //ItemList list = new ItemList();
+    private ProjectServices.ProjectServicesClient projectServicesClient;
 
     //private async Task
     protected override void OnInitialized()
     {
-        itemClient = Need4Service.GetItemClient();
+        projectServicesClient = WebService.GetProjectServicesClient();
     }
 
     private async Task Refresh()
     {
-        newItem.Name = string.Empty;
-        list = await Task.Run(() => itemClient.GetAllItems(new Google.Protobuf.WellKnownTypes.Empty()));
+        //newProject. = string.Empty;
+        //list = await Task.Run(() => itemClient.GetAllItems(new Google.Protobuf.WellKnownTypes.Empty()));
     }
 
     protected override async Task OnParametersSetAsync()
@@ -69,7 +69,7 @@
 
     private async Task HandleValidSubmit()
     {
-        await Task.Run(() => itemClient.AddNewItem(newItem));
+        await Task.Run(() => projectServicesClient.CreateProjectRequest(newProject));
         //newItem.Validate();
         await Refresh();
         StateHasChanged();

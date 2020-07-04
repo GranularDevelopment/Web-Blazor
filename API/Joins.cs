@@ -2,16 +2,16 @@
 
 namespace ServiceProtocol
 {
-    //JOIN TABLE FOR ITEMLIST TO WORK
-    public partial class ItemList { public List<ItemList_Item> Joins { get; set; } }
-    public partial class Item { public List<ItemList_Item> Joins { get; set; } }
-    public class ItemList_Item
+    //JOIN TABLE FOR SREVICELIST TO WORK WITH ENTITY FRAMEWORK CORE
+    public partial class ServiceList { public List<ServiceList_Service> Joins { get; set; } }
+    public partial class Service { public List<ServiceList_Service> Joins { get; set; } }
+    public class ServiceList_Service
     {
-        public int Id { get; set; }
-        public ItemList ItemList { get; set; }
+        public int ServiceListId { get; set; }
+        public ServiceList ServiceList { get; set; }
 
-        public string Name { get; set; }
-        public Item Item { get; set; }
+        public string ServiceId { get; set; }
+        public Service Service { get; set; }
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
