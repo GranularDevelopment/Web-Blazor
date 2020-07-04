@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Need4Protocol
+namespace ServiceProtocol
 {
     //JOIN TABLE FOR ITEMLIST TO WORK
     public partial class ItemList { public List<ItemList_Item> Joins { get; set; } }

@@ -1,4 +1,4 @@
-﻿namespace Need4Protocol.Validation
+﻿namespace ServiceProtocol.Validation
 {
     public class Person
     {

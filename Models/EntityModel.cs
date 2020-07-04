@@ -1,18 +1,18 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Need4Protocol;
+using ServiceProtocol;
 using System;
 
 namespace Models
 {
-    public class Need4Context : DbContext
+    public class DataContext : DbContext
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
                 //string ConnectionString = "Data Source=" + Path.Combine(Directory.GetCurrentDirectory(), "need4.db");
-                string ConnectionString = "Data Source=C:\\Users\\Phil\\Repo\\Need4\\Models\\need4.db";
+                string ConnectionString = "Data Source=C:\\Users\\Phil\\Repo\\Serverside\\Models\\database.db";
 
                 try
                 {

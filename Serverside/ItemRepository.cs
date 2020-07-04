@@ -1,12 +1,12 @@
 ﻿using Grpc.Core;
 using Models;
-using Need4Protocol;
+using ServiceProtocol;
 using System;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace Need4
+namespace Serverside
 {
     public class ItemRepositoryImpl : ItemRepository.ItemRepositoryBase, IGenericCRUD
     {

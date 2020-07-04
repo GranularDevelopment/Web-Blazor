@@ -1,8 +1,8 @@
 ﻿using Grpc.Core;
-using Need4Protocol;
+using ServiceProtocol;
 using System;
 
-namespace Need4
+namespace Serverside
 {
     public class ServiceHandler : IDisposable
     {

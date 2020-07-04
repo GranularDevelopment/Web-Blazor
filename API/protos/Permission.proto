@@ -1,8 +1,7 @@
 ﻿syntax = "proto3";
 
-package Need4Protocol;
+package ServiceProtocol;
 
-import "google/protobuf/wrappers.proto";
 import "protos/Action.proto";
 import "protos/User.proto";
 

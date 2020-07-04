@@ -1,7 +1,7 @@
 using Grpc.Core;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
-using Need4Protocol;
+using ServiceProtocol;
 
 namespace XYZ
 {

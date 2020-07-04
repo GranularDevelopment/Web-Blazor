@@ -1,6 +1,6 @@
 ﻿syntax = "proto3";
 
-package Need4Protocol;
+package ServiceProtocol;
 import "protos/Action.proto";
 import "google/protobuf/empty.proto";
 

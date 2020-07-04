@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Need4Protocol.Validation
+namespace ServiceProtocol.Validation
 {
     public class ItemValidator : AbstractValidator<Item>
     {

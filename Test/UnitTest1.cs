@@ -1,7 +1,7 @@
 using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
-using Need4;
-using Need4Protocol;
+using Serverside;
+using ServiceProtocol;
 using System;
 using System.Net;
 using Xunit;
@@ -118,6 +118,7 @@ namespace TestAPIs
         [Fact]
         public void GetAllItemsCheckOne()
         {
+            client.AddNewItem(InitData.orange);
             ItemList reply = client.GetAllItems(new Empty());
             Assert.Contains<Item>(InitData.orange, reply.Items);
         }

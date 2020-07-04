@@ -1,17 +1,17 @@
 ﻿using Grpc.Core;
 using Models;
-using Need4Protocol;
+using ServiceProtocol;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace Need4
+namespace Serverside
 {
     public class TradeServiceImpl : TradeService.TradeServiceBase
     {
         // Server side handler of the SayHello RPC
         public override Task<ActionResponse> CreateTrade(Trade request, ServerCallContext context)
         {
-            using (Need4Context db = new Need4Context())
+            using (DataContext db = new DataContext())
             {
                 bool created = db.Database.EnsureCreated();
                 //Console.WriteLine("Database was created (true), or existing (false): {0}", created);

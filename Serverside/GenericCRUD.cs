@@ -1,12 +1,12 @@
 ﻿using Models;
-using Need4Protocol;
+using ServiceProtocol;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace Need4
+namespace Serverside
 {
     public interface IGenericCRUD
     {
@@ -19,7 +19,7 @@ namespace Need4
         {
             try
             {
-                using var db = new Need4Context();
+                using var db = new DataContext();
                 bool created = db.Database.EnsureCreated();
 
                 db.Add(inputObject);
@@ -34,11 +34,11 @@ namespace Need4
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Extension method")]
-        public static IQueryable<T> GenericWrappedInvoke<T>(this IGenericCRUD i, T inputObject, Func<Need4Context, IQueryable<T>> filterFunction, Action<T> formatFunction)
+        public static IQueryable<T> GenericWrappedInvoke<T>(this IGenericCRUD i, T inputObject, Func<DataContext, IQueryable<T>> filterFunction, Action<T> formatFunction)
         {
             try
             {
-                using Need4Context db = new Need4Context();
+                using DataContext db = new DataContext();
                 IQueryable<T> q = filterFunction.Invoke(db);
                 q.ToList().ForEach(formatFunction);
                 return q;

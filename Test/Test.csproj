@@ -24,8 +24,8 @@
   </ItemGroup>
 
 	<ItemGroup>
-    <ProjectReference Include="..\Need4\Need4.csproj" />
     <ProjectReference Include="..\API\API.csproj" />
+    <ProjectReference Include="..\Serverside\Services.csproj" />
   </ItemGroup>
 
 </Project>

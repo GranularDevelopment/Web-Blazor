@@ -1,6 +1,6 @@
 ﻿syntax = "proto3";
 
-package Need4Protocol;
+package ServiceProtocol;
 
 message ActionResponse {
 	int32 result = 1;

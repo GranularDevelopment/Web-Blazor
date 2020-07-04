@@ -25,7 +25,7 @@ namespace XYZ
             //services.AddMvc(option => option.EnableEndpointRouting = false);
             services.AddServerSideBlazor();
             services.AddSingleton<Need4Service>();
-            services.AddSingleton<Models.Need4Context>();
+            services.AddSingleton<Models.DataContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

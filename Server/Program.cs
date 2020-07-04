@@ -1,7 +1,7 @@
-﻿using Need4;
+﻿using Serverside;
 using System.Threading;
 
-namespace Need4Server
+namespace StubServer
 {
     internal class Program
     {
