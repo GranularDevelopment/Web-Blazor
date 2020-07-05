@@ -13,22 +13,29 @@ namespace Serverside
 
         public override Task<ActionResponse> CreateProjectRequest(ProjectRequest request, ServerCallContext context)
         {
-            this.GenericCreate<Person>(request.Person);
-
-            this.GenericCreate<ServiceList>(request.ServiceList);
-
-            foreach(Service s in request.ServiceList.Services)
+            try
             {
-                this.GenericCreate<ServiceListService>(new ServiceListService { Service = s, ServiceList = request.ServiceList });
+                this.GenericCreate<Person>(request.Person);
+                this.GenericCreate<ServiceList>(request.ServiceList);
+                foreach(Service s in request.ServiceList.Services)
+                {
+                    var sls = new ServiceListService { Service = s, ServiceList = request.ServiceList };
+                    this.GenericInvoke<ServiceListService>( sls, (db) => db.ServiceListService.Attach(sls));
+                }
+                this.GenericInvoke<ProjectRequest>(request, (db) => db.ProjectRequests.Attach(request));
+                return Task.FromResult(new ActionResponse { Result = (int)HttpStatusCode.OK });
             }
+            catch
+            {
 
-            return this.GenericCreate<ProjectRequest>(request);
+                return Task.FromResult(new ActionResponse { Result = (int)HttpStatusCode.Forbidden });
+            }
         }
         public override Task<ServiceList> GetServicesAvailable(Google.Protobuf.WellKnownTypes.Empty e, ServerCallContext context)
         {
 
             ServiceList serviceList = new ServiceList();
-            IQueryable<Service> services = this.GenericWrappedInvoke<Service>(
+            IQueryable<Service> services = this.GenericQueryableInvoke<Service>(
                 null,
                 (db) => from r in db.Service select r,
                 (r) => serviceList.Services.Add(r));

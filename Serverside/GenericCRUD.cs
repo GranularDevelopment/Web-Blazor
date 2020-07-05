@@ -1,4 +1,5 @@
-﻿using Models;
+﻿using Microsoft.EntityFrameworkCore;
+using Models;
 using ServiceProtocol;
 using System;
 using System.Collections.Generic;
@@ -17,24 +18,17 @@ namespace Serverside
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Extension method")]
         public static Task<ActionResponse> GenericCreate<T>(this IGenericCRUD i, T inputObject)
         {
-            try
-            {
-                using var db = new DataContext();
-                bool created = db.Database.EnsureCreated();
+            using var db = new DataContext();
+            bool created = db.Database.EnsureCreated();
 
-                db.Add(inputObject);
-                db.SaveChanges();
+            db.Add(inputObject);
+            db.SaveChanges();
 
-                return Task.FromResult(new ActionResponse { Result = (int)HttpStatusCode.OK });
-            }
-            catch
-            {
-                return Task.FromResult(new ActionResponse { Result = (int)HttpStatusCode.Forbidden });
-            }
+            return Task.FromResult(new ActionResponse { Result = (int)HttpStatusCode.OK });
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Extension method")]
-        public static IQueryable<T> GenericWrappedInvoke<T>(this IGenericCRUD i, T inputObject, Func<DataContext, IQueryable<T>> filterFunction, Action<T> formatFunction)
+        public static IQueryable<T> GenericQueryableInvoke<T>(this IGenericCRUD i, T inputObject, Func<DataContext, IQueryable<T>> filterFunction, Action<T> formatFunction)
         {
             try
             {
@@ -47,6 +41,14 @@ namespace Serverside
             {
                 return null;
             }
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Extension method")]
+        public static void GenericInvoke<T>(this IGenericCRUD i, T inputObject, Action<DataContext> insertFunction) 
+        {
+            using DataContext db = new DataContext();
+            insertFunction.Invoke(db);
+            db.SaveChanges();
         }
     }
 }

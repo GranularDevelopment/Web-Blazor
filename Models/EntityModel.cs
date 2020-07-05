@@ -52,14 +52,14 @@ namespace Models
             e.Property(r => r.Id).ValueGeneratedOnAdd();
 
             e.HasData(
-                new { Id = -1, Description = "Consulting" },
-                new { Id = -2, Description = "UX/UI Design" },
-                new { Id = -3, Description = "Project Management" },
-                new { Id = -4, Description = "Mobile Development" },
-                new { Id = -5, Description = "Web Development" },
-                new { Id = -6, Description = "Cloud Services" },
-                new { Id = -7, Description = "Quality Assurance" },
-                new { Id = -8, Description = "Internet Of Things" }
+                new { Id = -8, Description = "Consulting" },
+                new { Id = -7, Description = "UX/UI Design" },
+                new { Id = -6, Description = "Project Management" },
+                new { Id = -5, Description = "Mobile Development" },
+                new { Id = -4, Description = "Web Development" },
+                new { Id = -3, Description = "Cloud Services" },
+                new { Id = -2, Description = "Quality Assurance" },
+                new { Id = -1, Description = "Internet Of Things" }
                 );
         }
         public DbSet<ServiceList> ServiceList { get; set; }
@@ -72,9 +72,11 @@ namespace Models
             e.HasData(new ServiceList { Id = -1 });
         }
 
+        public DbSet<ServiceListService> ServiceListService { get; set; }
+
         private void OnCreateServiceListService(EntityTypeBuilder<ServiceListService> entityTypeBuilder)
         {
-            entityTypeBuilder.HasKey(sls => new { sls.ServiceId, sls.ServiceListId });
+            entityTypeBuilder.HasKey(sls => new { sls.ServiceListId, sls.ServiceId });
             entityTypeBuilder.HasOne(sls => sls.ServiceList)
                 .WithMany(sl => sl.ServiceListServices)
                 .HasForeignKey(sls => sls.ServiceListId);
