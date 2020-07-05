@@ -14,67 +14,80 @@
                 <label for="FirstName" class="control-label">First Name</label>
                 <input @bind="newProject.Person.FirstName" class="form-control" />
             </div>
-            <div class="form-group">
-                <label for="Email" class="control-label">Email</label>
-                <input @bind="newProject.Person.Email" class="form-control" />
-            </div>
-            <div class="form-group">
-                <label for="CompanyName" class="control-label">Company Name</label>
-                <input @bind="newProject.Person.CompanyName" class="form-control" />
-            </div>
         </div>
-
         <div class="col-md-4">
             <div class="form-group">
                 <label for="LastName" class="control-label">Last Name</label>
                 <input @bind="newProject.Person.LastName" class="form-control" />
             </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="Email" class="control-label">Email</label>
+                <input @bind="newProject.Person.Email" class="form-control" />
+            </div>
+        </div>
+        <div class="col-md-4">
             <div class="form-group">
                 <label for="PhoneNumber" class="control-label">Phone number</label>
                 <input @bind="newProject.Person.PhoneNumber" class="form-control" />
             </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="CompanyName" class="control-label">Company Name</label>
+                <input @bind="newProject.Person.CompanyName" class="form-control" />
+            </div>
+        </div>
+        <div class="col-md-4">
             <div class="form-group">
                 <label for="CompanyType" class="control-label">Company Type</label>
                 <input @bind="newProject.Person.CompanyType" class="form-control" />
             </div>
         </div>
     </div>
-</EditForm>
 
-<h2>SERVICES NEEDED</h2>
-<div class="row">
-    <div class="col-md-4">
-        @foreach (Service s in availableServices)
-        {
-            @if (availableServices.IndexOf(s) < availableServices.Count() / 2 + availableServices.Count() % 2)
+    <h2>SERVICES NEEDED</h2>
+    <div class="row">
+        <div class="col-md-4">
+            @foreach (Service s in availableServices)
             {
-                <div class="form-group">
-                    @s.Description
-                </div>
+                @if (availableServices.IndexOf(s) < availableServices.Count() / 2 + availableServices.Count() % 2)
+                {
+                    <div class="form-group">
+                        @s.Description
+                    </div>
+                }
             }
-        }
-    </div>
-    <div class="col-md-4">
-        @foreach (Service s in availableServices)
-        {
-            @if (availableServices.IndexOf(s) >= availableServices.Count() / 2 + availableServices.Count() % 2)
+        </div>
+        <div class="col-md-4">
+            @foreach (Service s in availableServices)
             {
-                <div class="form-group">
-                    @s.Description
-                </div>
+                @if (availableServices.IndexOf(s) >= availableServices.Count() / 2 + availableServices.Count() % 2)
+                {
+                    <div class="form-group">
+                        @s.Description
+                    </div>
+                }
             }
-        }
+        </div>
     </div>
-</div>
 
 
-<EditForm Model="@newProject" OnValidSubmit="HandleValidSubmit">
-    <FluentValidationValidator />
-    <ValidationSummary />
     <div class="row">
         <div class="form-group">
             <label for="CompanyName" class="control-label">Message</label>
             <input @bind="newProject.Message" class="form-control" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group">
+            <input type="submit" value="Create" class="btn btn-primary" />
         </div>
     </div>
 </EditForm>

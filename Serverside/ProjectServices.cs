@@ -13,6 +13,15 @@ namespace Serverside
 
         public override Task<ActionResponse> CreateProjectRequest(ProjectRequest request, ServerCallContext context)
         {
+            this.GenericCreate<Person>(request.Person);
+
+            this.GenericCreate<ServiceList>(request.ServiceList);
+
+            foreach(Service s in request.ServiceList.Services)
+            {
+                this.GenericCreate<ServiceListService>(new ServiceListService { Service = s, ServiceList = request.ServiceList });
+            }
+
             return this.GenericCreate<ProjectRequest>(request);
         }
 
