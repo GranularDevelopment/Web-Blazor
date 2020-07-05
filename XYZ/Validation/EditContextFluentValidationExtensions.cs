@@ -68,6 +68,13 @@ namespace XYZ.Validation
             var validatorAssembly = Assembly.Load("API");
             var assemblyTypes = validatorAssembly.GetTypes();
             var modelValidatorType = assemblyTypes.FirstOrDefault(t => t.IsSubclassOf(abstractValidatorType));
+
+            if (modelValidatorType is null)
+            {
+                validatorAssembly = Assembly.Load("XYZ");
+                assemblyTypes = validatorAssembly.GetTypes();
+                modelValidatorType = assemblyTypes.FirstOrDefault(t => t.IsSubclassOf(abstractValidatorType));
+            }
             var modelValidatorInstance = (IValidator)Activator.CreateInstance(modelValidatorType);
 
             return modelValidatorInstance;

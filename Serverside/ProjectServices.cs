@@ -24,6 +24,16 @@ namespace Serverside
 
             return this.GenericCreate<ProjectRequest>(request);
         }
+        public override Task<ServiceList> GetServicesAvailable(Google.Protobuf.WellKnownTypes.Empty e, ServerCallContext context)
+        {
+
+            ServiceList serviceList = new ServiceList();
+            IQueryable<Service> services = this.GenericWrappedInvoke<Service>(
+                null,
+                (db) => from r in db.Service select r,
+                (r) => serviceList.Services.Add(r));
+            return Task.FromResult(serviceList);
+        }
 
         //public override Task<ProjectRequestList> GetMatchingProjectRequests(ProjectRequest ProjectRequestToMatch, ServerCallContext context)
         //{

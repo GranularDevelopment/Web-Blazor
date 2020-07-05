@@ -42,23 +42,25 @@
     <h2>SERVICES NEEDED</h2>
     <div class="row">
         <div class="col-md-4">
-            @foreach (Service s in availableServices)
+            @foreach (var s in servicesSelected)
             {
-                @if (availableServices.IndexOf(s) < availableServices.Count() / 2 + availableServices.Count() % 2)
+                @if (servicesSelected.IndexOf(s) < servicesSelected.Count() / 2 + servicesSelected.Count() % 2)
                 {
                     <div class="form-group">
-                        @s.Description
+                        <InputCheckbox @bind-Value="s.selected"/>
+                        @s.service.Description
                     </div>
                 }
             }
         </div>
         <div class="col-md-4">
-            @foreach (Service s in availableServices)
+            @foreach (var s in servicesSelected)
             {
-                @if (availableServices.IndexOf(s) >= availableServices.Count() / 2 + availableServices.Count() % 2)
+                @if (servicesSelected.IndexOf(s) >= servicesSelected.Count() / 2 + servicesSelected.Count() % 2)
                 {
                     <div class="form-group">
-                        @s.Description
+                        <InputCheckbox @bind-Value="s.selected"/>
+                        @s.service.Description
                     </div>
                 }
             }
@@ -79,44 +81,66 @@
         </div>
     </div>
 </EditForm>
-        @code {
-            ProjectRequest newProject = new ProjectRequest { Person = new Person(), ServiceList = new ServiceList() };
-            List<Service> availableServices = new List<Service>
-                    {
-                    new Service {Description = "Consulting"},
-                    new Service {Description = "UX/UI Design"},
-                    new Service {Description = "Project Management" },
-                    new Service {Description = "Mobile Development"},
-                    new Service {Description = "Web Development"},
-                    new Service {Description = "Cloud Services"},
-                    new Service {Description = "Quality Assurance"},
-                    new Service {Description = "Internet of Things"},
-                };
-            //ItemList list = new ItemList();
-            private ProjectServices.ProjectServicesClient projectServicesClient;
+@code {
 
-            //private async Task
-            protected override void OnInitialized()
-            {
-                projectServicesClient = WebService.GetProjectServicesClient();
-            }
+    public class ServiceSelected
+    {
+        public Service service;
+        public bool selected;
+    }
 
-            private async Task Refresh()
-            {
-                //newProject. = string.Empty;
-                //list = await Task.Run(() => itemClient.GetAllItems(new Google.Protobuf.WellKnownTypes.Empty()));
-            }
+    ProjectRequest newProject = new ProjectRequest { Person = new Person(), ServiceList = new ServiceList() };
+    //List<Service> availableServices = new List<Service>
+    //        {
+    //        new Service {Description = "Consulting"},
+    //        new Service {Description = "UX/UI Design"},
+    //        new Service {Description = "Project Management" },
+    //        new Service {Description = "Mobile Development"},
+    //        new Service {Description = "Web Development"},
+    //        new Service {Description = "Cloud Services"},
+    //        new Service {Description = "Quality Assurance"},
+    //        new Service {Description = "Internet of Things"},
+    //    };
 
-            protected override async Task OnParametersSetAsync()
-            {
-                await Refresh();
-            }
+    List<ServiceSelected> servicesSelected = new List<ServiceSelected>();
 
-            private async Task HandleValidSubmit()
-            {
-                await Task.Run(() => projectServicesClient.CreateProjectRequest(newProject));
-                //newItem.Validate();
-                await Refresh();
-                StateHasChanged();
-            }
+    //ItemList list = new ItemList();
+    private ProjectServices.ProjectServicesClient projectServicesClient;
+
+    //private async Task
+    protected override void OnInitialized()
+    {
+        projectServicesClient = WebService.GetProjectServicesClient();
+
+        ServiceList list = projectServicesClient.GetServicesAvailable(new Google.Protobuf.WellKnownTypes.Empty());
+        foreach(var s in list.Services)
+        {
+            servicesSelected.Add(new ServiceSelected { service = s, selected = false });
         }
+
+    }
+
+    private async Task Refresh()
+    {
+        //newProject. = string.Empty;
+        //list = await Task.Run(() => itemClient.GetAllItems(new Google.Protobuf.WellKnownTypes.Empty()));
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await Refresh();
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        foreach(var s in servicesSelected)
+        {
+            newProject.ServiceList.Services.Add(s.service);
+        }
+
+        await Task.Run(() => projectServicesClient.CreateProjectRequest(newProject));
+        //newItem.Validate();
+        await Refresh();
+        StateHasChanged();
+    }
+}

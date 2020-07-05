@@ -2,11 +2,13 @@
 
 import "protos/Action.proto";
 import "protos/Person.proto";
+import "google/protobuf/empty.proto";
 
 package ServiceProtocol;
 
 service ProjectServices {
 	rpc CreateProjectRequest (ProjectRequest) returns (ActionResponse);
+	rpc GetServicesAvailable (google.protobuf.Empty) returns (ServiceList);
 }
 
 message ProjectRequest {
