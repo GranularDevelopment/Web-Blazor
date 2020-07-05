@@ -2,85 +2,222 @@
 @using XYZ.Data
 @inject WebService WebService
 
-<h2>Work with US</h2>
-<h1>Start a Project</h1>
 
-<EditForm Model="@newProject" OnValidSubmit="HandleValidSubmit">
-    <FluentValidationValidator />
-    <ValidationSummary />
-    <div class="row">
-        <div class="col-md-4 form-group">
-            <label for="FirstName" class="control-label">First Name</label>
-            <input @bind="newProject.Person.FirstName" class="form-control" />
-        </div>
-        <div class="col-md-4 form-group">
-            <label for="LastName" class="control-label">Last Name</label>
-            <input @bind="newProject.Person.LastName" class="form-control" />
-        </div>
+<nav class="site-header sticky-top py-1">
+    <div class="container d-flex flex-column flex-md-row justify-content-between">
+        <a class="py-2" href="#" aria-label="Product">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="d-block mx-auto" role="img" viewBox="0 0 24 24" focusable="false"><title>Product</title><circle cx="12" cy="12" r="10" /><path d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06M14.31 16H2.83m13.79-4l-5.74 9.94" /></svg>
+        </a>
+        <a class="py-2 d-none d-md-inline-block" href="#">Services</a>
+        <a class="py-2 d-none d-md-inline-block" href="#">Technologies</a>
+        <a class="py-2 d-none d-md-inline-block" href="#">Testimonials</a>
+        <a class="py-2 d-none d-md-inline-block" href="#">Support</a>
+        <a class="py-2 d-none d-md-inline-block" href="#">Pricing</a>
     </div>
-    <div class="row">
-        <div class="col-md-4 form-group">
-            <label for="Email" class="control-label">Email</label>
-            <input @bind="newProject.Person.Email" class="form-control" />
-        </div>
-        <div class="col-md-4 form-group">
-            <label for="PhoneNumber" class="control-label">Phone number</label>
-            <input @bind="newProject.Person.PhoneNumber" class="form-control" />
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-4 form-group">
-            <label for="CompanyName" class="control-label">Company Name</label>
-            <input @bind="newProject.Person.CompanyName" class="form-control" />
-        </div>
-        <div class="col-md-4 form-group">
-            <label for="CompanyType" class="control-label">Company Type</label>
-            <input @bind="newProject.Person.CompanyType" class="form-control" />
-        </div>
-    </div>
+</nav>
 
-    <h2>SERVICES NEEDED</h2>
-    <div class="row">
-        <div class="col-md-4">
-            @foreach (var s in servicesSelected)
-            {
-                @if (servicesSelected.IndexOf(s) < servicesSelected.Count() / 2 + servicesSelected.Count() % 2)
-                {
-                    <div class="form-group">
-                        <InputCheckbox @bind-Value="s.selected"/>
-                        @s.service.Description
+<div class="position-relative overflow-hidden p-3 p-sm-1 m-sm-1 text-center bg-light">
+    <div class="col-lg-5 p-sm-1 mx-auto my-5">
+        <h1 class="display-4 font-weight-normal">Customers will love us!</h1>
+        <p class="lead font-weight-normal">Right now, it's mostly family and friends.</p>
+    </div>
+    <div class="product-device shadow-sm d-none d-md-block"></div>
+    <div class="product-device product-device-2 shadow-sm d-none d-md-block"></div>
+</div>
+
+<div class="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
+    <div class="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
+        <div class="my-3 py-3">
+            <h2 class="display-5">Testimonial 1</h2>
+            <p class="lead">Fucking great job.</p>
+        </div>
+        <div class=" mx-auto"></div>
+    </div>
+    <div class="bg-light mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
+        <div class="my-3 p-3">
+            <h2 class="display-5">Testimonial 2</h2>
+            <p class="lead">These dudes!</p>
+        </div>
+        <div class=" mx-auto"></div>
+    </div>
+    <div class="bg-success mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
+        <div class="my-3 p-3">
+            <h2 class="display-5">Testimonial 3</h2>
+            <p class="lead">Saved green.</p>
+        </div>
+        <div class=" mx-auto"></div>
+    </div>
+    <div class="bg-danger mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
+        <div class="my-3 p-3">
+            <h2 class="display-5">Testimonial 4</h2>
+            <p class="lead">Greatest SLA: 110%</p>
+        </div>
+        <div class=" mx-auto"></div>
+    </div>
+</div>
+<!-- ***** Features Big Item Start ***** -->
+<section class="section" id="about">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12"
+                 data-scroll-reveal="enter left move 30px over 0.6s after 0.4s">
+                <div class="features-item">
+                    <div class="features-icon">
+                        <h2>01</h2>
+                        <h4>Trend Analysis</h4>
+                        <p>Curabitur pulvinar vel odio sed sagittis. Nam maximus ex diam, nec consectetur diam.</p>
+                        <a href="#testimonials" class="main-button">
+                            Read More
+                        </a>
                     </div>
-                }
-            }
-        </div>
-        <div class="col-md-4">
-            @foreach (var s in servicesSelected)
-            {
-                @if (servicesSelected.IndexOf(s) >= servicesSelected.Count() / 2 + servicesSelected.Count() % 2)
-                {
-                    <div class="form-group">
-                        <InputCheckbox @bind-Value="s.selected"/>
-                        @s.service.Description
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12"
+                 data-scroll-reveal="enter bottom move 30px over 0.6s after 0.4s">
+                <div class="features-item">
+                    <div class="features-icon">
+                        <h2>02</h2>
+                        <h4>Site Optimization</h4>
+                        <p>Curabitur pulvinar vel odio sed sagittis. Nam maximus ex diam, nec consectetur diam.</p>
+                        <a href="#testimonials" class="main-button">
+                            Discover More
+                        </a>
                     </div>
-                }
-            }
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12"
+                 data-scroll-reveal="enter right move 30px over 0.6s after 0.4s">
+                <div class="features-item">
+                    <div class="features-icon">
+                        <h2>03</h2>
+                        <h4>Email Design</h4>
+                        <p>Curabitur pulvinar vel odio sed sagittis. Nam maximus ex diam, nec consectetur diam.</p>
+                        <a href="#testimonials" class="main-button">
+                            More Detail
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+</section>
 
 
+<div class="container">
+    <div class="col-lg-5 p-sm-1 mx-auto my-5">
+    <div class="text-center">
+        <h2>Work with US</h2>
+        <h2>Start a project</h2>
+    </div>
+        <EditForm Model="@newProject" OnValidSubmit="HandleValidSubmit">
+            <FluentValidationValidator />
+            <ValidationSummary />
+            <div class="row">
+                <div class="col-md-4 form-group">
+                    <label for="FirstName" class="control-label">First Name</label>
+                    <input @bind="newProject.Person.FirstName" class="form-control" />
+                </div>
+                <div class="col-md-4 form-group">
+                    <label for="LastName" class="control-label">Last Name</label>
+                    <input @bind="newProject.Person.LastName" class="form-control" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 form-group">
+                    <label for="Email" class="control-label">Email</label>
+                    <input @bind="newProject.Person.Email" class="form-control" />
+                </div>
+                <div class="col-md-4 form-group">
+                    <label for="PhoneNumber" class="control-label">Phone number</label>
+                    <input @bind="newProject.Person.PhoneNumber" class="form-control" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 form-group">
+                    <label for="CompanyName" class="control-label">Company Name</label>
+                    <input @bind="newProject.Person.CompanyName" class="form-control" />
+                </div>
+                <div class="col-md-4 form-group">
+                    <label for="CompanyType" class="control-label">Company Type</label>
+                    <input @bind="newProject.Person.CompanyType" class="form-control" />
+                </div>
+            </div>
+
+            <h2>SERVICES NEEDED</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    @foreach (var s in servicesSelected)
+                    {
+                        @if (servicesSelected.IndexOf(s) < servicesSelected.Count() / 2 + servicesSelected.Count() % 2)
+                        {
+                            <div class="form-group">
+                                <InputCheckbox @bind-Value="s.selected" />
+                                @s.service.Description
+                            </div>
+                        }
+                    }
+                </div>
+                <div class="col-md-4">
+                    @foreach (var s in servicesSelected)
+                    {
+                        @if (servicesSelected.IndexOf(s) >= servicesSelected.Count() / 2 + servicesSelected.Count() % 2)
+                        {
+                            <div class="form-group">
+                                <InputCheckbox @bind-Value="s.selected" />
+                                @s.service.Description
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="form-group">
+                    <label for="CompanyName" class="control-label">Message</label>
+                    <input @bind="newProject.Message" class="form-control" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <input type="submit" value="Get Started" class="btn btn-primary" />
+                </div>
+            </div>
+        </EditForm>
+        </div>
+</div>
+
+<footer class="container py-5">
     <div class="row">
-        <div class="form-group">
-            <label for="CompanyName" class="control-label">Message</label>
-            <input @bind="newProject.Message" class="form-control" />
+        <div class="col-6 col-md">
+            <h5>Services</h5>
+            <ul class="list-unstyled text-small">
+                <li><a class="text-muted" href="#">Standard Services</a></li>
+                <li><a class="text-muted" href="#">Custom Projects</a></li>
+                <li><a class="text-muted" href="#">Maintenance</a></li>
+            </ul>
+        </div>
+        <div class="col-6 col-md">
+            <h5>Resources</h5>
+            <ul class="list-unstyled text-small">
+                <li><a class="text-muted" href="#">Technology</a></li>
+                <li><a class="text-muted" href="#">Hosting</a></li>
+            </ul>
+        </div>
+        <div class="col-6 col-md">
+            <h5>About</h5>
+            <ul class="list-unstyled text-small">
+                <li><a class="text-muted" href="#">Team</a></li>
+                <li><a class="text-muted" href="#">Locations</a></li>
+                <li><a class="text-muted" href="#">Terms</a></li>
+            </ul>
         </div>
     </div>
-
     <div class="row">
-        <div class="form-group">
-            <input type="submit" value="Get Started" class="btn btn-primary" />
-        </div>
+        <small class="d-block mb-3 text-muted">Granular Development &copy; 2020</small>
     </div>
-</EditForm>
+</footer>
 @code {
 
     public class ServiceSelected
@@ -101,7 +238,7 @@
         projectServicesClient = WebService.GetProjectServicesClient();
 
         ServiceList list = projectServicesClient.GetServicesAvailable(new Google.Protobuf.WellKnownTypes.Empty());
-        foreach(var s in list.Services)
+        foreach (var s in list.Services)
         {
             servicesSelected.Add(new ServiceSelected { service = s, selected = false });
         }
@@ -121,9 +258,9 @@
 
     private async Task HandleValidSubmit()
     {
-        foreach(var s in servicesSelected)
+        foreach (var s in servicesSelected)
         {
-            if(s.selected)
+            if (s.selected)
                 newProject.ServiceList.Services.Add(s.service);
         }
 

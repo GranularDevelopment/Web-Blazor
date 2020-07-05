@@ -1,4 +1,8 @@
-﻿dotnet ef migrations add InitialCreate --namespace Models
+﻿--Install EF Core tool
+dotnet tool install --global dotnet-ef
+
+-- Change path on ConnectionString to SQLite location
+dotnet ef migrations add InitialCreate --namespace Models
 dotnet ef database update
 
 
