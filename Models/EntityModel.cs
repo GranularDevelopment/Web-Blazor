@@ -12,7 +12,7 @@ namespace Models
             if (!optionsBuilder.IsConfigured)
             {
                 //string ConnectionString = "Data Source=" + Path.Combine(Directory.GetCurrentDirectory(), "need4.db");
-                string ConnectionString = "Data Source=C:\\Users\\Phil\\Repo\\Serverside\\Models\\database.db";
+                string ConnectionString = "Data Source=C:\\Users\\Phil\\Repo\\Web-Blazor\\Models\\database.db";
 
                 try
                 {
@@ -29,15 +29,19 @@ namespace Models
             // PERSISTED ENTITIES
             OnCreatePerson(modelBuilder.Entity<Person>());
             OnCreateService(modelBuilder.Entity<Service>());
+            OnCreateServiceList(modelBuilder.Entity<ServiceList>());
+            OnCreateServiceListService(modelBuilder.Entity<ServiceListService>());
             OnCreateProject(modelBuilder.Entity<ProjectRequest>());
         }
+
+
         public DbSet<Person> Person { get; set; }
         private void OnCreatePerson(EntityTypeBuilder<Person> entityTypeBuilder)
         {
             entityTypeBuilder.HasKey(r => r.Id);
             entityTypeBuilder.Property(r => r.Id).ValueGeneratedOnAdd();
             entityTypeBuilder.HasData(
-                new { Id = -1, FirstName = "Phil" }
+                new { Id = -1, FirstName = "Phil", LastName = "Miller", Email = "phil.miller84@gmail.com", PhoneNumber = "818-531-8197", CompanyName = "XYZ", CompanyType = "Web" }
                 );
         }
 
@@ -64,20 +68,24 @@ namespace Models
             e.HasKey(r => r.Id);
             e.Property(r => r.Id).ValueGeneratedOnAdd();
             e.Ignore(r => r.Services);
-            var dat = new ServiceList { Id = -1 };
-            dat.Services.Add(new Service { Id = -1 });
-            dat.Services.Add(new Service { Id = -5 });
-            e.HasData(dat);
+
+            e.HasData(new ServiceList { Id = -1 });
         }
-        protected void OnCreateServiceList_Service(EntityTypeBuilder<ServiceList_Service> e)
+
+        private void OnCreateServiceListService(EntityTypeBuilder<ServiceListService> entityTypeBuilder)
         {
-            e.HasKey(t => new { t.ServiceId, t.ServiceListId });
-            e.HasOne(ili => ili.Service)
-                .WithMany(i => i.Joins)
-                .HasForeignKey(ili => ili.ServiceListId);
-            e.HasOne(ili => ili.ServiceList)
-                .WithMany(il => il.Joins)
-                .HasForeignKey(ili => ili.ServiceId);
+            entityTypeBuilder.HasKey(sls => new { sls.ServiceId, sls.ServiceListId });
+            entityTypeBuilder.HasOne(sls => sls.ServiceList)
+                .WithMany(sl => sl.ServiceListServices)
+                .HasForeignKey(sls => sls.ServiceListId);
+            entityTypeBuilder.HasOne(sls => sls.Service)
+                .WithMany(s => s.ServiceListServices)
+                .HasForeignKey(sls => sls.ServiceId);
+
+            entityTypeBuilder.HasData(
+                new { ServiceId = -1, ServiceListId = -1 },
+                new { ServiceId = -5, ServiceListId = -1 }
+                );
         }
 
         public DbSet<ProjectRequest> ProjectRequests { get; set; }

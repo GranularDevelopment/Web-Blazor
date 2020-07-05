@@ -3,14 +3,14 @@
 namespace ServiceProtocol
 {
     //JOIN TABLE FOR SREVICELIST TO WORK WITH ENTITY FRAMEWORK CORE
-    public partial class ServiceList { public List<ServiceList_Service> Joins { get; set; } }
-    public partial class Service { public List<ServiceList_Service> Joins { get; set; } }
-    public class ServiceList_Service
+    public partial class ServiceList { public ICollection<ServiceListService> ServiceListServices { get; set; } }
+    public partial class Service { public ICollection<ServiceListService> ServiceListServices { get; set; } }
+    public class ServiceListService
     {
         public int ServiceListId { get; set; }
         public ServiceList ServiceList { get; set; }
 
-        public string ServiceId { get; set; }
+        public int ServiceId { get; set; }
         public Service Service { get; set; }
     }
 
