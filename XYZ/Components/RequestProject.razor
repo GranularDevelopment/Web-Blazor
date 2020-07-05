@@ -2,76 +2,120 @@
 @using XYZ.Data
 @inject WebService WebService
 
-<h1>Create</h1>
+<h2>Work with US</h2>
+<h1>Start a Project</h1>
 
-@*<h4>Item</h4>
-<hr />
+<EditForm Model="@newProject" OnValidSubmit="HandleValidSubmit">
+    <FluentValidationValidator />
+    <ValidationSummary />
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="FirstName" class="control-label">First Name</label>
+                <input @bind="newProject.Person.FirstName" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="Email" class="control-label">Email</label>
+                <input @bind="newProject.Person.Email" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="CompanyName" class="control-label">Company Name</label>
+                <input @bind="newProject.Person.CompanyName" class="form-control" />
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="LastName" class="control-label">Last Name</label>
+                <input @bind="newProject.Person.LastName" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="PhoneNumber" class="control-label">Phone number</label>
+                <input @bind="newProject.Person.PhoneNumber" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="CompanyType" class="control-label">Company Type</label>
+                <input @bind="newProject.Person.CompanyType" class="form-control" />
+            </div>
+        </div>
+    </div>
+</EditForm>
+
+<h2>SERVICES NEEDED</h2>
 <div class="row">
     <div class="col-md-4">
-        <EditForm Model="@newItem" OnValidSubmit="HandleValidSubmit">
-            <FluentValidationValidator />
-            <ValidationSummary />
-            <div class="form-group">
-                <label for="Name" class="control-label">Name</label>
-                <input @bind="newItem.Name" class="form-control" />
-            </div>
-            <div class="form-group">
-                <label for="EstimatedCost" class="control-label">Estimate Cost</label>
-                <input @bind="newItem.EstimatedCost" class="form-control" />
-            </div>
-            <div class="form-group">
-                <label for="Quantity" class="control-label">Quantity</label>
-                <input @bind="newItem.Quantity" class="form-control" />
-            </div>
-            <div class="form-group">
-                <label for="Measurement" class="control-label">Measurement</label>
-                <input @bind="newItem.Measurement" class="form-control" />
-            </div>
-            <div class="form-group">
-                <label for="Description" class="control-label">Description</label>
-                <input @bind="newItem.Description" class="form-control" />
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </EditForm>
+        @foreach (Service s in availableServices)
+        {
+            @if (availableServices.IndexOf(s) < availableServices.Count() / 2 + availableServices.Count() % 2)
+            {
+                <div class="form-group">
+                    @s.Description
+                </div>
+            }
+        }
     </div>
     <div class="col-md-4">
-        <ListItem list="list"></ListItem>
+        @foreach (Service s in availableServices)
+        {
+            @if (availableServices.IndexOf(s) >= availableServices.Count() / 2 + availableServices.Count() % 2)
+            {
+                <div class="form-group">
+                    @s.Description
+                </div>
+            }
+        }
     </div>
-</div>*@
+</div>
 
 
+<EditForm Model="@newProject" OnValidSubmit="HandleValidSubmit">
+    <FluentValidationValidator />
+    <ValidationSummary />
+    <div class="row">
+        <div class="form-group">
+            <label for="CompanyName" class="control-label">Message</label>
+            <input @bind="newProject.Message" class="form-control" />
+        </div>
+    </div>
+</EditForm>
+        @code {
+            ProjectRequest newProject = new ProjectRequest { Person = new Person(), ServiceList = new ServiceList() };
+            List<Service> availableServices = new List<Service>
+                    {
+                    new Service {Description = "Consulting"},
+                    new Service {Description = "UX/UI Design"},
+                    new Service {Description = "Project Management" },
+                    new Service {Description = "Mobile Development"},
+                    new Service {Description = "Web Development"},
+                    new Service {Description = "Cloud Services"},
+                    new Service {Description = "Quality Assurance"},
+                    new Service {Description = "Internet of Things"},
+                };
+            //ItemList list = new ItemList();
+            private ProjectServices.ProjectServicesClient projectServicesClient;
 
+            //private async Task
+            protected override void OnInitialized()
+            {
+                projectServicesClient = WebService.GetProjectServicesClient();
+            }
 
+            private async Task Refresh()
+            {
+                //newProject. = string.Empty;
+                //list = await Task.Run(() => itemClient.GetAllItems(new Google.Protobuf.WellKnownTypes.Empty()));
+            }
 
-@code {
-    ProjectRequest newProject = new ProjectRequest();
-    //ItemList list = new ItemList();
-    private ProjectServices.ProjectServicesClient projectServicesClient;
+            protected override async Task OnParametersSetAsync()
+            {
+                await Refresh();
+            }
 
-    //private async Task
-    protected override void OnInitialized()
-    {
-        projectServicesClient = WebService.GetProjectServicesClient();
-    }
-
-    private async Task Refresh()
-    {
-        //newProject. = string.Empty;
-        //list = await Task.Run(() => itemClient.GetAllItems(new Google.Protobuf.WellKnownTypes.Empty()));
-    }
-
-    protected override async Task OnParametersSetAsync()
-    {
-        await Refresh();
-    }
-
-    private async Task HandleValidSubmit()
-    {
-        await Task.Run(() => projectServicesClient.CreateProjectRequest(newProject));
-        //newItem.Validate();
-        await Refresh();
-        StateHasChanged();
-    }
-}
+            private async Task HandleValidSubmit()
+            {
+                await Task.Run(() => projectServicesClient.CreateProjectRequest(newProject));
+                //newItem.Validate();
+                await Refresh();
+                StateHasChanged();
+            }
+        }
